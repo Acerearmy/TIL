@@ -40,12 +40,12 @@ world
 이런식으로 3개를 써서 표현한다.
 - 문자열 덧셈
   - print("'1'+'1'",'1'+'1')은  
-  2가아닌 11로 출력된다.
+  2가아닌 11로 출력된다.  
   ![alt text](image-13.png)
 
 - 문자열 곱셈
-  - print('Hello world'*1000)
-   ![alt text](image-14.png)
+  - print('Hello world'*1000)  
+   ![alt text](image-14.png)  
 이런식으로 1000번 출력된다.  
 
 - 문자 치환
@@ -133,8 +133,8 @@ name = input('name: ')
 message = 'hi, '+name+' ..... bye, '+name+'.'
 print(message)
 ```
- 이런식으로 바꿔주면
-![alt text](image-16.png)
+ 이런식으로 바꿔주면  
+![alt text](image-16.png)  
 바뀐 변수로 출력이 가능
 
 ## pypi pip
