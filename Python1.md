@@ -28,7 +28,7 @@ import random
 print('random.random()',random.random) 랜덤 실수 출력 메서드
 ```
 ### 출력예제
-![alt text](image-12.png)  
+![image](./assets/image-12.png)  
 
 ## 문자열 데이터 타입
 - '',""로 묶어서 표현한다.
@@ -41,11 +41,11 @@ world
 - 문자열 덧셈
   - print("'1'+'1'",'1'+'1')은  
   2가아닌 11로 출력된다.  
-  ![alt text](image-13.png)
+  ![image](./assets/image-13.png)
 
 - 문자열 곱셈
   - print('Hello world'*1000)  
-   ![alt text](image-14.png)  
+   ![image](./assets/image-14.png)  
 이런식으로 1000번 출력된다.  
 
 - 문자 치환
@@ -70,7 +70,7 @@ List는 통계에서 자주 사용한다.
 import statistics
 print(statistics.mean(grades))
 ```
-![alt text](image-15.png)
+![image](./assets/image-15.png)
 통계모듈을 사용해서 평균값을 구했다.
 
 ```python
@@ -134,7 +134,7 @@ message = 'hi, '+name+' ..... bye, '+name+'.'
 print(message)
 ```
  이런식으로 바꿔주면  
-![alt text](image-16.png)  
+![image](./assets/image-16.png)  
 바뀐 변수로 출력이 가능
 
 ## pypi pip

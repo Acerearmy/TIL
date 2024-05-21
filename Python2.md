@@ -16,7 +16,7 @@
   print('1 !=1', 1 != 1)  
   print('2 !=1', 2 != 1)
   ```
-    ![alt text](image-17.png)
+    ![image](./assets/image-17.png)
 true or false로 값을 표현
 
 ## 조건문
@@ -33,7 +33,7 @@ true or false로 값을 표현
     print(1)
   print(2)
   ```
-  ![alt text](image-18.png)  
+  ![image](./assets/image-18.png)  
 - if문 안쪽을 입력할 때 tab을 사용하거나 스페이스바로 공백을 주거나 할때 통일해서 사용해야한다
 - Ex2
   ```python
@@ -43,7 +43,7 @@ true or false로 값을 표현
     print('Welcome')
     ```
 - 입력한 id값이 id와 같으면 Welcome을 출력한다.  
-![alt text](image-19.png)  
+![image](./assets/image-19.png)  
 이런식으로
 
 ### if ~ else ~
@@ -62,7 +62,7 @@ else:
     print(2)
 print(3)
 ```
-![alt text](image-20.png)  
+![image](./assets/image-20.png)  
 - 조건에 따라 다른값을 출력하게 만드는 것이 가능하다.
 
 ### elif~
@@ -88,7 +88,7 @@ else:
     print(3)
 pirnt(4)
 ```
-![alt text](image-21.png)  
+![image](./assets/image-21.png)  
 조건에 따른 출력의 차이를 확실히 알것.
 
 ### 조건문 중첩
@@ -107,7 +107,7 @@ else:
     print('Wrong id')
 ```
 조건에 따라 다른 값을 출력하게 만들어주는 것  
-![alt text](image-22.png)
+![image](./assets/image-22.png)
 
 ### 반복문 - for
 - 반복문과 List는 단짝  
@@ -119,7 +119,7 @@ names = ['mumu','PGTA','GloryK']
 for name in names:
     print(name)
 ```
-![alt text](image-23.png)  
+![image](./assets/image-23.png)  
 출력은 이런식으로! 자바의 for문가 동일하니 잘 알아두자!
 
 ### 다차원배열
@@ -146,7 +146,7 @@ for name, address, interest in persons:
     print(person[0]+','+person[1]+','+person[2])
 //해당 설정을 이용하여 for문을 이런식으로 치환해주는것도 가능하다
 ```
-![alt text](image-24.png)
+![image](./assets/image-24.png)
 
 ### 사전형 반복문 Dictionary+Loop
 - 다차원리스트 각각의 원소에 이름을 붙이는 것.
@@ -172,5 +172,5 @@ for person in persons :
         print(key, ':', person[key])
     print('----------------')
 ```
-![alt text](image-25.png)  
+![image](./assets/image-25.png)  
 출력값은 이러하지 자바의 이중for문가 비교해보고 잘 확인할것!
