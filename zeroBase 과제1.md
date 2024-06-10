@@ -89,3 +89,199 @@ if (age < 3) {
 else if를 이용하여 조건에 맞는 식을 구현해준다. 이때 army와 card를 string으로 했기 때문에 '=='이 아니라 .equals로 비교해주는게 맞다.
 
 ![image](./zeroBase/image-9.png)
+
+# 과제 4 주민등록번호 생성 프로그램
+- 수행목적 :  Scanner의 입력함수와 조건문 및 Random 클래스를 통한 주민번호 생성로직작성
+- 간략소개 :  주민번호는 출생년도와 출생월과 성별에 대한 내용을 포함하여 만들어지는 숫자로 된 체계 입니다.   
+이에 2020년도부터 생성조건이 변경되었습니다.
+이를 조건에 맞게 생성하
+는 프로그램을 작성해보세요.
+- 입력값은 2020년도 이후로 입력한다는 전제로 작성해주세요.
+
+![image](./zeroBase/image-10.png)
+![image](./zeroBase/image-11.png)
+
+풀이
+```java
+import java.util.Random;
+import java.util.Scanner;
+
+public class notepad2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[주민등록번호 계산]");
+        System.out.print("출생년도를 입력해 주세요.(yyyy): ");
+        int year = sc.nextInt();
+
+        System.out.print("출생월을 입력해 주세요.(mm): ");
+        int month = sc.nextInt();
+
+        System.out.print("출생일을 입력하세요: ");
+        int day = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("성별을 입력해 주세요.(m/f): ");
+        String gender = sc.nextLine();
+```
+우선은 보이는 부분을 입력받았다.  
+이제 이 입력받은 정보를 토대로 주민번호를 생성하도록 작성해보자
+```java
+String yearstr = String.valueOf(year % 1000); //String타입으로 입력받는게 나중에 합쳐서 출력하기 편하다. year을 100으로 나누면 나머지는 뒤에 두자리만 남게 되고 이것을 String으로 변환시켜서 저장해준다
+String monthstr = String.format("%02d", month);
+        String daystr = String.format("%02d", day);
+        //마찬가지로 달과 일도 입력받는데 이때 한자리수 일수도 있기때문에 format을 이용해서 2자리로 각각 변환하여 저장해준다.
+int gendercode = 0;
+        if (gender.equals("m")) {
+            gendercode = 3;
+        } else {
+            gendercode = 4;
+        }
+        //성별에 따라 3이나 4가 나오게 세팅
+        Random random = new Random();
+        int randomNum = random.nextInt((999998)+1); // 랜덤의 nextInt는 0부터 n까지의 숫잔데 우리는 1부터 99999까지 필요하기때문에 999998+1로 맞춰준다. 그러면 1부터 999999까지.
+System.out.println(yearstr + monthstr + daystr + " - " + gendercode + randomNum);
+//최종적으로 양식에 맞게 출력되게끔 한다.
+```
+## 최종코드
+```java
+import java.util.Random;
+import java.util.Scanner;
+
+public class notepad2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[주민등록번호 계산]");
+        System.out.print("출생년도를 입력해 주세요.(yyyy): ");
+        int year = sc.nextInt();
+
+        System.out.print("출생월을 입력해 주세요.(mm): ");
+        int month = sc.nextInt();
+
+        System.out.print("출생일을 입력하세요: ");
+        int day = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("성별을 입력해 주세요.(m/f): ");
+        String gender = sc.nextLine();
+
+        String yearstr = String.valueOf(year % 100);
+        String monthstr = String.format("%02d", month);
+        String daystr = String.format("%02d", day);
+
+        int gendercode = 0;
+        if (gender.equals("m")) {
+            gendercode = 3;
+        } else {
+            gendercode = 4;
+        }
+        Random random = new Random();
+        int randomNum = random.nextInt((999999)+1);
+        System.out.println(yearstr + monthstr + daystr + " - " + gendercode + randomNum);
+
+    }
+}
+```
+
+![image](./zeroBase/image-12.png)
+정상적으로 출력된다.
+
+# 과제 5 달력 출력 프로그램
+- 수행목적 : Scanner의 입력함수와 조건문 및 반복문을 통한 달력 계산 로직 작성
+- 간략소개 :  달력은 일반적인 전산 시스템에서 많이 사용하는 컴포넌트 입니다.  입력받은 년도
+와 월을 통해 달력을 출력하는 프로그램을 작성해보세요.
+
+![image](./zeroBase/image-13.png)
+![image](./zeroBase/image-14.png)
+
+풀이과정  
+Localdate타임 함수가 안써봤던거라 좀 오래걸렸다.  
+하던대로 보이는 부분부터
+```java
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[달력 출력 프로그램]");
+        System.out.print("달력의 년도를 입력해 주세요.(yyyy): ");
+        int year = sc.nextInt();
+        System.out.print("달력의 월을 입력해 주세요.(mm): ");
+        int month = sc.nextInt();
+        LocalDate curMonth = LocalDate.of(year, month, 1);
+        LocalDate PreMonth = curMonth.minusMonths(1);
+        LocalDate NexMonth = curMonth.plusMonths(1);
+        //LocalDate of는 대입합 값의 따른 년도와 달을 변환해주는 메서드
+        //minus,plus(month, year, day)는 기존에 입력된 LocalDate정보에 일정수만큼 년,달,일을 더하거나 빼준다.
+```
+그냥 입력하기엔 원체 답이 안보여서 달력을 만들어주는 기능은 메서드로 빼버렸다.
+```java
+public static void Calendar(LocalDate date) {//미리 만들어둔 로컬데이트를 입력받아서 처리
+int year = date.getYear();
+int month = date.getMonthValue();
+//year은 그냥 겟할수있는데 달은 monthvalue를 써야된다. 중복되는 단어가 있어서 그런가
+
+//해당 달의 첫번째 날과 마지막 날을 구한다.
+LocalDate firstDay = LocalDate.of(year,month,1); // 해당 년/달의 1일
+int lastDay = date.lengthOfMonth();
+//익숙한 lenght. 길이=마지막 날
+int dow =firstDay.getDayOfWeek().getValue(); // getDayOfWeek은 해당 날짜의 요일을 구하는 메서드다. 처음엔 이걸로 어떻게 해볼려고했는데 잘 안되서 이것을 정수로 바꿔줘서 저장했다(getValue)
+System.out.println("["+year+"년 "+month+"월]");
+System.out.println("일  월   화  수  목   금  토");
+//만들어둔 year과 month를 이용해 표의 윗부분을 구축 간격맞추기가 어려웠다.
+for (int i = 0; i < dow%7; i++) {
+    System.out.print("    ");
+    }
+//요일을 int형으로 바꿔준 이유이다. 해당 달의 첫번째 날짜가 일요일이라는 보장이 없으므로 1일 이전의 요일엔 공백을 채워줘야한다.
+//처음엔 dow만을 조건으로 했더니 dow가 토요일(7)이 되면 맨 윗줄을 통째로 비워버리기 때문에 dow%7로 조건을 수정했다.
+for (int i = 1; i <= lastDay ; i++) {
+    System.out.printf("%02d\t", i);
+//그리고 마지막 날짜까지 day를 출력하되 
+if((dow+i)%7==0){
+    System.out.println();
+} //맨처음 공백과 day(i)를 포함해서 7일마다 줄바꿈을 해줘야한다.
+// 처음엔 i만 7로 나눴더니 그냥 위에서부터 7일씩 끊어버려서 실패
+        }
+        System.out.println();
+        //출력이 끝났으면 한칸띄어서 구분해준다.
+    }
+}
+```
+### 최종코드
+```java
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class notepad2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[달력 출력 프로그램]");
+        System.out.print("달력의 년도를 입력해 주세요.(yyyy): ");
+        int year = sc.nextInt();
+        System.out.print("달력의 월을 입력해 주세요.(mm): ");
+        int month = sc.nextInt();
+        LocalDate curMonth = LocalDate.of(year, month, 1);
+        LocalDate PreMonth = curMonth.minusMonths(1);
+        LocalDate NexMonth = curMonth.plusMonths(1);
+        Calendar(PreMonth);
+        Calendar(curMonth);
+        Calendar(NexMonth);
+    }
+    public static void Calendar(LocalDate date){
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        LocalDate firstDay = LocalDate.of(year,month,1);
+        int lastDay = date.lengthOfMonth();
+        int dow =firstDay.getDayOfWeek().getValue();
+        System.out.println("["+year+"년 "+month+"월]");
+        System.out.println("일  월   화  수  목   금  토");
+        for (int i = 0; i < dow%7; i++) {
+            System.out.print("    ");
+        }
+        for (int i = 1; i <= lastDay ; i++) {
+            System.out.printf("%02d\t", i);
+            if((dow+i)%7==0){
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+}
+```
+![image](./zeroBase/image-15.png)
+※ 익숙하지 않은 함수였기 때문에 시간이 꽤 오래걸렸다. 지식이 늘었다.
