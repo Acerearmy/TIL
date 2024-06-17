@@ -3,8 +3,8 @@
 - 간략소개 : 반복문의 기본을 학습하는 진부하면서도 고전프로그램인 구구단을 화면에 출력
 하는 프로그램을 작성해주세요  
 
-예시
-![image](./zeroBase/image.png)
+예시  
+![image](./zeroBase/image.png)  
 첫번째 줄에 1~9단의 첫줄이 출력되며
 순차적으로 다음 숫자가 출력되게 만든다.
 
@@ -15,7 +15,7 @@ System.out.println("[구구단 출력]");
 for (int i = 1; i <= 9; i++) {
     for (int j = 1; j <= 9; j++) { //1단부터 9단까지 줄수는 9개
         System.out.printf("%02d X %02d = %02d     ", i, j, i * j);
-        }//%d는 10진수 format으로 %와d사이에 숫자를 너으면 해당 단어의 간격을 정할 수 있고 0을 넣으면 단어외의 빈자리를 0으로 채워준다. 0x X 0x = n의 형싱을 취하고있으므로 %02d를 사용하도록 한다
+        }//%d는 10진수 format으로 %와d사이에 숫자를 넣으면 해당 단어의 간격을 정할 수 있고 0을 넣으면 단어외의 빈자리를 0으로 채워준다. 0x X 0x = n의 형싱을 취하고있으므로 %02d를 사용하도록 한다
         System.out.println(" "); //두번째 for문 즉 첫번째 줄 출력후에 한줄 띄어준다.
         }
     }
@@ -46,7 +46,7 @@ public class notepad2 {
     }
 }
 ```
-round 함수를 배워 지식이 늘었다.
+round 함수를 배워 지식이 늘었다.  
 ![image](./zeroBase/image-5.png)
 ![image](./zeroBase/image-6.png)
 
@@ -182,7 +182,7 @@ public class notepad2 {
 }
 ```
 
-![image](./zeroBase/image-12.png)
+![image](./zeroBase/image-12.png)  
 정상적으로 출력된다.
 
 # 과제 5 달력 출력 프로그램
@@ -194,20 +194,20 @@ public class notepad2 {
 ![image](./zeroBase/image-14.png)
 
 풀이과정  
-Localdate타임 함수가 안써봤던거라 좀 오래걸렸다.  
+Localdate타입 함수가 안써봤던거라 좀 오래걸렸다.  
 하던대로 보이는 부분부터
 ```java
-        Scanner sc = new Scanner(System.in);
-        System.out.println("[달력 출력 프로그램]");
-        System.out.print("달력의 년도를 입력해 주세요.(yyyy): ");
-        int year = sc.nextInt();
-        System.out.print("달력의 월을 입력해 주세요.(mm): ");
-        int month = sc.nextInt();
-        LocalDate curMonth = LocalDate.of(year, month, 1);
-        LocalDate PreMonth = curMonth.minusMonths(1);
-        LocalDate NexMonth = curMonth.plusMonths(1);
-        //LocalDate of는 대입합 값의 따른 년도와 달을 변환해주는 메서드
-        //minus,plus(month, year, day)는 기존에 입력된 LocalDate정보에 일정수만큼 년,달,일을 더하거나 빼준다.
+Scanner sc = new Scanner(System.in);
+System.out.println("[달력 출력 프로그램]");
+System.out.print("달력의 년도를 입력해 주세요.(yyyy): ");
+int year = sc.nextInt();
+System.out.print("달력의 월을 입력해 주세요.(mm): ");
+int month = sc.nextInt();
+LocalDate curMonth = LocalDate.of(year, month, 1);
+LocalDate PreMonth = curMonth.minusMonths(1);
+LocalDate NexMonth = curMonth.plusMonths(1);
+//LocalDate of는 대입합 값의 따른 년도와 달을 변환해주는 메서드
+//minus,plus(month, year, day)는 기존에 입력된 LocalDate정보에 일정수만큼 년,달,일을 더하거나 빼준다.
 ```
 그냥 입력하기엔 원체 답이 안보여서 달력을 만들어주는 기능은 메서드로 빼버렸다.
 ```java
@@ -283,7 +283,7 @@ public class notepad2 {
     }
 }
 ```
-![image](./zeroBase/image-15.png)
+![image](./zeroBase/image-15.png)  
 ※ 익숙하지 않은 함수였기 때문에 시간이 꽤 오래걸렸다. 지식이 늘었다.
 
 # 과제 6 가상 선거 및 당선 시뮬레이션 프로그램
@@ -447,7 +447,7 @@ public static boolean contain(int[] lottoticket, int num) {//중복체크해줘�
         return false; // 틀리다면 false를 리턴한다.
 즉 !contain(ticketNum, num)에서 숫자가 중복되지 않으면 false가 되고 !false는 true니까 중복되지 않음으로 판단하여 각 order++번째 배열에 숫자가 대입되는 것이다.
 ```
-다시main문으로 돌아와서 해당 메서드들을 통해 입력받은 숫자만큼의 로또 번호를 출력하게 구현해준다.
+다시 main문으로 돌아와서 해당 메서드들을 통해 입력받은 숫자만큼의 로또 번호를 출력하게 구현해준다.
 ```java
 System.out.println("[로또 당첨 프로그램]\n");
         System.out.print("로또 개수를 입력해 주세요.(숫자 1 ~ 10):");
@@ -466,6 +466,7 @@ System.out.println("[로또 당첨 프로그램]\n");
         }
 ```
 문제가 하나있다.  
+
 ![image](./zeroBase/image-22.png)  
 각 로또번호의 출력 앞을 보면 A부터 시작되는 알파벳이 있다. 숫자를 쓰면 간단하겠지만 알파벳이라 골치가 아파졌다.  
 거기서 생각해낸게 char를 이용해 문자하나를 추가해주는 방법이었다.  
@@ -599,8 +600,7 @@ public class notepad2 {
 ```
 
 ![image](./zeroBase/image-23.png)  
-
-- 예제의 출력부와 일치하는 결과값이 나왔다.
+예제의 출력부와 일치하는 결과값이 나왔다.
 # 과제 8 연소득 과세금액 계산 프로그램
 - 수행목적 : Scanner의 입력함수와 조건문 및 반복문과 배열, 함수를 통한 과세 로직 작성
 - 간략소개 : 대한민국헌법은 국민의 의무와 권리를 규정하고 있습니다. 이 중 납세의 의무는 국
