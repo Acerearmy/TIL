@@ -285,3 +285,483 @@ public class notepad2 {
 ```
 ![image](./zeroBase/image-15.png)
 ※ 익숙하지 않은 함수였기 때문에 시간이 꽤 오래걸렸다. 지식이 늘었다.
+
+# 과제 6 가상 선거 및 당선 시뮬레이션 프로그램
+- 수행목적 : 조건문 및 반복문과 배열(or 컬렉션)을 통한 당선 시뮬레이션 로직 작성
+- 간략소개 :  민주주의에서 선거를 대단히 중요한 의사표현입니다. 
+이런 선거를 미리 시뮬레이
+션을 통해서 진행하는 프로그램을 만들어보고자 합니다. 전체
+ 투표수와 후보자를 입력 받아서
+ 그 결과를 
+미리 확인하는  선거 및 당선 시뮬레이션 프로그램을 만들어보세요.
+
+![image](./zeroBase/image-16.png)
+![image](./zeroBase/image-17.png)
+
+우선은 하던대로 눈에 보이는 부분을 작성한다
+```java
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random();
+        System.out.print("총 진행할 투표수르르 입력해주세요. ");
+        int totalvote = sc.nextInt();
+
+        System.out.print("가상 선거를 진행할 후보자 인원을 입력해 주세요. ");
+        int candidateNum = sc.nextInt();
+        sc.nextLine();
+
+        String[] candidateName = new String[candidateNum];
+        for (int i = 0; i <candidateNum ; i++) {
+            System.out.print((i+1)+"번째 후보자 이름을 입력해 주세요. ");
+            candidateName[i]=sc.nextLine();
+        }
+```
+이후 한명이 투표할때마다 그 퍼센테이지, 몇명이 투표했는지, 누구를 투표했는지를 출력하며, 거기에 기호와 이름, 개별 퍼센테이지와 백문율, 투표수도 출력해줘야한다.  
+for문이 한번돌 때마다 출력해야할 양이 상당하다.
+```java
+int[] voteResult = new int[candidateNum];
+//후보자 인원수만큼의 배열을 만들어준다. 여기에 각 인원수별로 투표받은 숫자를 저장해줄것이다.
+ for (int i = 1; i <=totalvote; i++) { //for문은 총 투표수만큼 반복한다.
+            int vote = random.nextInt(candidateNum); 
+            //변수를 하나 만들어서 인원수만큼의 숫자 중 하나를 뽑아 저장한다.
+            voteResult[vote]++; // 기호vote번에 투표수를 하나 저장하는 방식으로 투표수만큼 반복하여 각 후보자에 투표수를 누적한다
+이후에는 투표진행률을 출력하는 코드
+System.out.printf("[투표진행률]: %.2f%%, %d명 투표 => %s\n"
+                    ,(double)i/totalvote*100,i,candidateName[vote]);
+        //투표율을 표시한다. 비율, 투표 수, 누적되는 후보 이름 순이다. 소숫점이기에 표현식은 int가 아닌 double이나 float로 받아준다.
+            for (int j = 0; j < candidateNum; j++) {
+                System.out.printf("기호:%d] %s:\t%.2f%%\t(투표수: %d)\n",
+                        (j+1),candidateName[j],(double) voteResult[j]/totalvote*100,voteResult[j]);
+            //아랫쪽은 개별투표수를 출력하는 코드로 j가 0부터 시작이기에 +1해주는 것을 잊지말고 출력 예시에 맞게 포맷을 작성하자.
+            }
+ }
+  System.out.println(""); //줄 띄우기
+```
+이제 각 투표수를 비교하여 최다득표한 인원을 찾아 당선인으로 출력하면된다.
+```java
+int maxVote = 0;//최다 득표수 확인용
+int elected = 0;//당선 기호 확인용
+    for (int i = 0; i < candidateNum; i++) { //후보인원수만큼 반복하며 서로 비교
+        if(voteResult[i]>maxVote){ //최다득표수와 각 후보의 득표수를 비교하여
+            maxVote=voteResult[i]; // 최다득표수를 갱신해주고
+            elected=i; // 최다득표한 인원의 기호를 대입한다.
+        }
+    }
+System.out.println("[투표결과] 당선인 : "+candidateName[elected]); //후보 중에 최다득표한 인원의 이름을 출력한다.
+```
+최종코드
+```java
+import java.util.Random;
+import java.util.Scanner;
+
+public class notepad2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random();
+        System.out.print("총 진행할 투표수르르 입력해주세요. ");
+        int totalvote = sc.nextInt();
+
+        System.out.print("가상 선거를 진행할 후보자 인원을 입력해 주세요. ");
+        int candidateNum = sc.nextInt();
+        sc.nextLine();
+
+        String[] candidateName = new String[candidateNum];
+        for (int i = 0; i <candidateNum ; i++) {
+            System.out.print((i+1)+"번째 후보자 이름을 입력해 주세요. ");
+            candidateName[i]=sc.nextLine();
+        }
+
+        int[] voteResult = new int[candidateNum];
+        for (int i = 1; i <=totalvote; i++) {
+            int vote = random.nextInt(candidateNum);
+            voteResult[vote]++;
+            System.out.printf("[투표진행률]: %.2f%%, %d명 투표 => %s\n"
+                    ,(double)i/totalvote*100,i,candidateName[vote]);
+            for (int j = 0; j < candidateNum; j++) {
+                System.out.printf("기호:%d] %s:\t%.2f%%\t(투표수: %d)\n",
+                        (j+1),candidateName[j],(double) voteResult[j]/totalvote*100,voteResult[j]);
+            }
+ }
+        System.out.println("");
+        int maxVote = 0;
+        int elected = 0;
+        for (int i = 0; i < candidateNum; i++) {
+            if(voteResult[i]>maxVote){
+                maxVote=voteResult[i];
+                elected=i;
+            }
+        }
+        System.out.println("[투표결과] 당선인 : "+candidateName[elected]);
+    }
+}
+```
+![image](./zeroBase/image-18.png)  
+.  
+ .  
+ .  
+![image](./zeroBase/image-19.png)
+
+정상출력됨을 확인할 수 있다.
+반복문과 스트링 포맷, 조건식을 잘 활용하면 어렵지 않게 풀 수 있었다.
+
+# 과제 7 로또 당첨 프로그램
+
+- 수행목적 : Scanner의 입력함수와 조건문 및 반복문과 배열을 통한 로또당첨 로직 작성
+- 간략소개 : 로또는 1-45개의 숫자 사이의 값 중 6개를 맞추면 당첨되는 복권 입니다. 로또의 개
+수를 구매하고(구매수량입력), 당첨번호를 생성한다. 이후, 구매한 로또의 당첨번호를 판단하
+는 프로그램을 작성해보세요.
+
+![image](./zeroBase/image-20.png)
+![image](./zeroBase/image-21.png)
+
+<strong>6개의 숫자가 적힌 배열을 1~10개만큼 생성</strong>하며 6개짜리 당첨 번호를 추가로 생성하여 <strong>이미 생성된 번호와 비교</strong>하여 <strong>몇개가 일치하는지 확인</strong>한다
+
+하던대로 보이는 부분을 구현
+```java
+Scanner sc = new Scanner(System.in);
+System.out.println("[로또 당첨 프로그램]\n");
+System.out.print("로또 개수를 입력해 주세요.(숫자 1 ~ 10):");
+int lottoNum = sc.nextInt();
+int[][] lottoticket = new int[lottoNum][6];//입력한 갯수만큼 길이가6짜리 2차원배열을 생성한다.
+```
+이후 코드 작성과정에서 숫자 6개짜리 배열을 만드는 과정에서 코드가 길어지기도 하고 추후 당첨 번호도 작성해야하는 이유로 숫자 6개짜리 배열을 만드는 코드는 메서드로 빼버렸다.
+```java
+public static int[] creatLnumber(Random rd) {
+        int[] ticketNum = new int[6];//숫자는 총 6개
+        int order = 0;//숫자의 위치를 나타내는 용이다
+        while (order < 6) {// 위치가 6이되면 while문 종료
+            int num = rd.nextInt(45) + 1;//숫자는 1~45까지이므로 +1을 해줘야한다
+            if (!contain(ticketNum, num)) {//작성을 하다보니 6개의 배열중에 중복되는 숫자가 나올 가능성도 고려해야했다. 이것또한 메서드로 빼는 편이 더 좋을 것이라 판단, contain이라는 메서드를 추가하기로 했다.
+                ticketNum[order++] = num; //중복을 체크하여 중복되지 않았다면 각 배열에 해당 숫자를 추가한다.
+            }
+        }
+        return ticketNum; //마지막으로 추가된 6개짜리 숫자배열을 리턴
+}
+
+public static boolean contain(int[] lottoticket, int num) {//중복체크해줘야했다. 배열에 들어갈 숫자로.
+        for (int n : lottoticket) {//로또티켓만큼 반복하는데 
+            if (n == num) {//해당배열에 있는 숫자가 입력받은 숫자와 같은지 판단하여
+                return true; //같다면 true를
+            }
+        }
+        return false; // 틀리다면 false를 리턴한다.
+즉 !contain(ticketNum, num)에서 숫자가 중복되지 않으면 false가 되고 !false는 true니까 중복되지 않음으로 판단하여 각 order++번째 배열에 숫자가 대입되는 것이다.
+```
+다시main문으로 돌아와서 해당 메서드들을 통해 입력받은 숫자만큼의 로또 번호를 출력하게 구현해준다.
+```java
+System.out.println("[로또 당첨 프로그램]\n");
+        System.out.print("로또 개수를 입력해 주세요.(숫자 1 ~ 10):");
+        int lottoNum = sc.nextInt();
+        int[][] lottoticket = new int[lottoNum][6];
+        for (int i = 0; i < lottoNum; i++) {
+            lottoticket[i] = creatLnumber(rd);//i번째 티켓에 로또번호 생성
+            for (int j = 0; j < 6; j++) {//번호는 6개니까 6번반복
+            //Arrays.toString을 쓰면 간단하게 출력할 수 있으나 해당 과제에선 [와 ]가 포함되지 않고 출력되고있다. 때문에 반복문을 사용해서 출력토록한다.
+                System.out.printf("%02d", lottoticket[i][j]);
+                if (j < 5) {
+                    System.out.print(",");//마지막 숫자 이후엔 ,가 출력될 필요가 없으니 if를 하나 추가해준다.
+                }
+            }
+            System.out.println("");
+        }
+```
+문제가 하나있다.  
+![image](./zeroBase/image-22.png)  
+각 로또번호의 출력 앞을 보면 A부터 시작되는 알파벳이 있다. 숫자를 쓰면 간단하겠지만 알파벳이라 골치가 아파졌다.  
+거기서 생각해낸게 char를 이용해 문자하나를 추가해주는 방법이었다.  
+char cnt='A'이고 로또 갯수만큼 반복할때 여기에+1을 해주면 유니코드 입력법칙에 따라 알파벳이 하나 씩 바뀔것이다.  
+이것을 토대로 main문을 수정한다.
+```java
+ Scanner sc = new Scanner(System.in);
+        Random rd = new Random();
+        char cnt = 'A';
+        System.out.println("[로또 당첨 프로그램]\n");
+        System.out.print("로또 개수를 입력해 주세요.(숫자 1 ~ 10):");
+        int lottoNum = sc.nextInt();
+        int[][] lottoticket = new int[lottoNum][6];
+        for (int i = 0; i < lottoNum; i++) {
+            lottoticket[i] = creatLnumber(rd);
+            System.out.print(cnt + "\t");//처음엔 "A    "으로 출력되고
+            for (int j = 0; j < 6; j++) {
+                System.out.printf("%02d", lottoticket[i][j]);
+                if (j < 5) {
+                    System.out.print(",");
+                }
+            }
+            System.out.println("");
+            cnt++;//반복문 한번에 cnt를 1씩 추가해주면 그다음 cnt는 'B','C'....순서로 바뀔것이다.
+        }
+```
+이후에는 당첨번호를 만들어서 출력한 후에 이것과 이전에 작성된 번호끼리 중복되는 숫자를 카운트해서 표시해줘야한다.
+```java
+중복되는 숫자를 찾는 메서드를 작성
+ public static int matchCnt(int[] creatT,int[] winningT){
+        int cnt = 0;
+        for (int m1 : creatT){
+            for(int m2 : winningT) {//각각의 6개의 번호를 모두 비교하여
+                if(m1 == m2) {
+                    cnt++; //일치하는 숫자가 있다면 카운트를 하나올려주고
+                }
+            }
+        }
+        return cnt; //마지막에 이 카운트를 리턴해준다.
+    }
+```
+해당코드를 취합하여 최종적으로 작성한 코드는 다음과 같다.
+```java
+import java.util.Random;
+import java.util.Scanner;
+
+public class notepad2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random rd = new Random();
+        char cnt = 'A';
+        System.out.println("[로또 당첨 프로그램]\n");
+        System.out.print("로또 개수를 입력해 주세요.(숫자 1 ~ 10):");
+        int lottoNum = sc.nextInt();
+        int[][] lottoticket = new int[lottoNum][6];
+        for (int i = 0; i < lottoNum; i++) {
+            lottoticket[i] = creatLnumber(rd);
+            System.out.print(cnt + "\t");
+            for (int j = 0; j < 6; j++) {
+                System.out.printf("%02d", lottoticket[i][j]);
+                if (j < 5) {
+                    System.out.print(",");
+                }
+            }
+            System.out.println("");
+            cnt++;
+        }
+        cnt ='A'; //아래에 일치갯수를 출력하는 코드에서 cnt를 재사용하기 때문에 cnt를 다시 A로 초기화해줘야한다. 그렇지않으면 위에 적었던 마지막 알파벳에서 이어서 출력될것이기 때문에
+        System.out.println("");
+
+        int[] winticketNum = creatLnumber(rd);
+
+        System.out.println("[로또 발표]");
+        System.out.print(" \t");
+        for (int i = 0; i < 6; i++) {
+            System.out.printf("%02d", winticketNum[i]);
+            if (i < 5) {
+                System.out.print(",");
+            }
+        }
+        System.out.println("");
+        System.out.println("[내 로또 결과]");
+        for (int i = 0; i < lottoNum; i++) {
+            System.out.print(cnt + "\t");
+            for (int j = 0; j < 6; j++) {
+                System.out.printf("%02d", lottoticket[i][j]);
+                if (j < 5) {
+                    System.out.print(",");
+                }
+            }
+            int match = matchCnt(lottoticket[i],winticketNum);
+            System.out.printf(" => %d개 일치\n",match);
+            cnt++;
+        }
+    }
+
+
+    public static int[] creatLnumber(Random rd) {
+        int[] ticketNum = new int[6];
+        int order = 0;
+        while (order < 6) {
+            int num = rd.nextInt(45) + 1;
+            if (!contain(ticketNum, num)) {
+                ticketNum[order++] = num;
+            }
+        }
+        return ticketNum;
+    }
+
+    public static boolean contain(int[] lottoticket, int num) {
+        for (int n : lottoticket) {
+            if (n == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int matchCnt(int[] creatT,int[] winningT){
+        int cnt = 0;
+        for (int m1 : creatT){
+            for(int m2 : winningT) {
+                if(m1 == m2) {
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+}
+```
+
+![image](./zeroBase/image-23.png)  
+
+- 예제의 출력부와 일치하는 결과값이 나왔다.
+# 과제 8 연소득 과세금액 계산 프로그램
+- 수행목적 : Scanner의 입력함수와 조건문 및 반복문과 배열, 함수를 통한 과세 로직 작성
+- 간략소개 : 대한민국헌법은 국민의 의무와 권리를 규정하고 있습니다. 이 중 납세의 의무는 국
+민의 3대 의무 중 하나입니다. 모든 국민은 1년동안 열심히 번 소득에 대해서 세금을 납부하여
+야 합니다. 이런 소득에 대한 소득세율표가 있습니다. 주어진 표를 기준으로해서 소득에 대한
+ 세금을 구하는 프로그램을 작성해보세요.
+
+
+![image](./zeroBase/image-24.png) 
+![image](./zeroBase/image-25.png) 
+
+※ 어렵다....겁나게 어렵다... 코드가 길어질 것같아서 세율을 계산하는 부분은 처음부터 메서드로 빼버렸으며 우선 보이는부분부터 입력해주기로했다.
+```java
+ Scanner sc = new Scanner(System.in);
+        System.out.println("[과세금액 계산 프로그램]");
+        System.out.print("연소득을 입력해 주세요:");
+        int income = sc.nextInt();
+```
+당장에 해결할 수 있는 부분은 이게 다였다.  
+이제 메서드로 뺀 부분에서 종합소득세율표를 보고 알 수 있는 정보들을 하나씩 기입하기로 했다.
+```java
+int[] taxation = {12000000, 46000000, 88000000, 150000000, 300000000, 500000000, 1000000000}; //과세표준에 따라 과세 배열을 만들어주고
+int[] taxRate = {6, 15, 24, 35, 38, 40, 42, 45}; //세율 배열
+int[] deductions = {0, 1080000, 5220000, 14900000, 19400000, 25400000, 35400000, 65400000}; //누진공제 배열
+
+int remain = income; //※1
+
+int totalTax = 0; //세율에 의한 세금의 최종값을 저장해줄 녀석
+
+for (int i = 0; i < taxation.length; i++) { //과세만큼 반복해준다.
+if (income <= taxation[i]) {//입력한 수가 과세배열의 해당수치와 비교하셔 같거나 작을경우
+                int taxable = remain; //계산과정에서 income하나로 계산이 복잡해져서 income값을 저장해서 계산할 변수를 따로 하나 추가하였다. ※1
+                int calculated = taxable * taxRate[i] / 100; // income에서 세율만큼 곱해서 나온 세금을 저장하며
+                totalTax += calculated; //이것을 세금 최종값에 저장한다.
+                System.out.printf("%10d * %2d%% = %10d\n", taxable, taxRate[i], calculated); //그리고 이것을 포멧을 맞춰서 예제처럼 출력한다.
+```
+이때 세율에 의한 세금을 계산하는 과정에 이런 설명이 덧붙여져있다.
+- 1,000만원소득인 경우는 과세표준이 1,200만원 이하이기 때문에 세율을 6%로 계산한 결과
+인 60만원의 세금이 부과됨
+- 1,500만원 소득의 경우는 과세표준 구간이 15%세율이기 때문에 15%로 계산하는게 아니라  
+  1,200만원까지는 6%의 세율로 계산하고 그 외만 15%로 계산해서 합계를냄. 
+
+![image](./zeroBase/image-26.png)  
+- 즉 수입이 4800만원이라면 4600만원을 초과한 200만원에 대해서는 24퍼센트의 세율을 부과하고
+- 1200만원부터 4600만원까지의 3400만원은 15퍼센트의 세율을 부과하며
+- 나머지 1200만원에 대해서는 6퍼센트의 세율을 부과한다는 의미다  
+  ~~뭔개소리냐 진짜~~
+- 요컨데 반복문이 반복되는동안 위 코드 이외에 추가조건을 줘서 각 세율 부분에 대한 계산을 세분화해줘야한다는 의미다.
+
+```java
+for (int i = 0; i < taxation.length; i++) {
+            if (income <= taxation[i]) {
+                int taxable = remain;
+                int calculated = taxable * taxRate[i] / 100;
+                totalTax += calculated;
+                System.out.printf("%10d * %2d%% = %10d\n", taxable, taxRate[i], calculated);
+                break;
+그래서 추가된 부분이 아래 else부분
+            } else {
+                int taxable = taxation[i] - (i > 0 ? taxation[i - 1] : 0);
+                i가 0일 때는 해당부분이 없이 if문의 첫번째만 구하고 끝나겠지만
+                i가 1이상이라면 taxation[i-1]과 0중에서 큰값(무조건 taxation[i-1])를
+                i번째 과세에서 빼준 값을 집어넣어 계산하게 된다. 
+
+                int calculated = taxable * taxRate[i] / 100;
+                totalTax += calculated; //계산값을 최종 세금에 더해준 후에
+                remain -= taxable; //계산한만큼의 값을 빼주고 
+                System.out.printf("%10d * %2d%% = %10d\n", taxable, taxRate[i], calculated); // 계산한 분량을 출력해준다
+            }
+        }
+```
+- 이렇게 코드를 작성하고 4800만원 Test Case를 대입해보자.
+  - i가 0이면 else부분이 실행되어 1200만원에 대한 세금을 계산하고(72만원) 4800만원에서 1200만원을 빼준다. remain = 3600만원
+  - i가 1이면 마찬가지로 else부분이 실행, 3400만원에 대한 세금을 계산(510만원) 후 3600만원에서 3400만원을 빼준다. remain = 200만원
+  - i가 2이면 if부분이 실행되어 200만원에 대해 세율 24퍼센트의 계산을 실행하여 totalTax에 더해지며 break를 만나 계산이 종료된다.
+
+![image](./zeroBase/image-27.png)  
+![image](./zeroBase/image-28.png)  
+
+세율에 의한 세금 계산은 정상적으로 처리된다.  
+다음에 구해야 하는 부분은 누진공제 계산에 의한 세금이다.
+```java
+        int totalTax2 = 0;
+        for (int i =taxation.length-1; i>=0; i--) {
+            if (income > taxation[i]) {
+                totalTax2 =income * taxRate[i+1] / 100 - deductions[i+1];
+                break;
+            }
+        }
+```
+계산이 간단한만큼 코드가 간단한데 유의할 점이 있다면 i가 0부터 시작하는 ++반복문이었다면 설정범위오류가 나기때문에 과세의 마지막부분부터 시작해서 반대로 내려가는 --반복문을 사용하였다.
+![image](./zeroBase/image-29.png)   
+![image](./zeroBase/image-30.png)   
+
+??? 테스트케이스 1번은 정상적으로 출력되나 2번은 음수가 나온다.  
+디버그 모드를 사용해서 체크해봐도 정상적으로 값을 가져왔으나 마지막 계산에서 갑자기 음수를 뱉어버린다.
+
+그 이유는 9200만을 입력했을 때 계산식이 처리되는 과정에서 int형 정수가 표현할 수 있는 한계를 넘어서 오버플로우가 발생한 것인데 int가 아닌 더 큰 수를 표현할 수 있는 표현식을 넣어주면 해결된다.
+
+
+```java
+        long totalTax2 = 0;
+        for (int i =taxation.length-1; i>=0; i--) {
+            if (income > taxation[i]) {
+                totalTax2 =(long)income * taxRate[i+1] / 100 - deductions[i+1];
+                break;
+            }
+        }
+```
+누진공제 계산에 의한 최종 세금을 저장한 변수 totalTax2를 long형으로 바꿔주어 최종적으로 작성한다.
+
+## 최종코드
+```java
+import java.util.Scanner;
+
+public class notepad2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[과세금액 계산 프로그램]");
+        System.out.print("연소득을 입력해 주세요:");
+        int income = sc.nextInt();
+        calculIncome(income);
+
+    }
+
+    public static void calculIncome(int income) {
+        int remain = income;
+        int[] taxation = {12000000, 46000000, 88000000, 150000000, 300000000, 500000000, 1000000000};
+        int[] taxRate = {6, 15, 24, 35, 38, 40, 42, 45};
+        int[] deductions = {0, 1080000, 5220000, 14900000, 19400000, 25400000, 35400000, 65400000};
+
+        int totalTax = 0;
+        for (int i = 0; i < taxation.length; i++) {
+            if (income <= taxation[i]) {
+                int taxable = remain;
+                int calculated = taxable * taxRate[i] / 100;
+                totalTax += calculated;
+                System.out.printf("%10d * %2d%% = %10d\n", taxable, taxRate[i], calculated);
+                break;
+            } else {
+                int taxable = taxation[i] - (i > 0 ? taxation[i - 1] : 0);
+                int calculated = taxable * taxRate[i] / 100;
+                totalTax += calculated;
+                remain -= taxable;
+                System.out.printf("%10d * %2d%% = %10d\n", taxable, taxRate[i], calculated);
+            }
+        }
+        long totalTax2 = 0;
+        for (int i =taxation.length-1; i>=0; i--) {
+            if (income > taxation[i]) {
+                totalTax2 =(long)income * taxRate[i+1] / 100 - deductions[i+1];
+                break;
+            }
+        }
+        System.out.println("[세율에 의한 세금]:\t\t\t" + totalTax);
+        System.out.println("[누진공제 계산에 의한 세금]:\t" + totalTax2);
+    }
+}
+```
+![image](./zeroBase/image-31.png)  
+
+출력결과도 이상없이 정상적으로 출력되는 것을 볼 수 있다.
+
+※ 세율 계산자체가 복잡하여 코드를 구현하는데 시간이 오래걸리는 문제였다.
