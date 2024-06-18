@@ -97,3 +97,37 @@ if(j==3&&i<fonix[j].peek()
 즉 청소가 불가능하여 NO가 출력된다.
 
 ![image](./BJ/image-6.png)
+```java
+최종코드
+import java.util.Scanner;
+import java.util.Stack;
+
+public class notepad2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int[] A = new int[N];
+        for (int i = 0; i < N; i++) {
+            A[i]=sc.nextInt();
+        }
+        Stack<Integer>[] fonix = new Stack[4];
+        for (int i = 0; i < fonix.length; i++) {
+            fonix[i]=new Stack<>();
+            fonix[i].push(0);
+        }
+        for (int i : A) {
+            for (int j = 0; j < fonix.length; j++) {
+                if(i>fonix[j].peek()){
+                    fonix[j].push(i);
+                    break;
+                }
+                if(j==3&&i<=fonix[j].peek()) {
+                    System.out.println("NO");
+                    return;
+                }
+            }
+        }
+        System.out.println("YES");
+    }
+}
+```
